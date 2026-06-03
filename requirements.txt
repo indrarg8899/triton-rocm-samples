@@ -1,0 +1,14 @@
+# Core requirements
+triton>=2.1.0
+torch>=2.1.0
+
+# Optional: benchmarking
+matplotlib>=3.7.0
+numpy>=1.24.0
+
+# Testing
+pytest>=7.0.0
+pytest-timeout>=2.1.0
+
+# Config
+pyyaml>=6.0

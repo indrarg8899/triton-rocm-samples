@@ -1,0 +1,80 @@
+# Default configuration for Triton ROCm Kernels
+
+# Hardware settings
+hardware:
+  target_gpu: "MI300X"
+  arch: "gfx942"
+  num_cus: 110
+  memory_gb: 192
+  wavefront_size: 64
+
+# Kernel defaults
+matmul:
+  block_m: 128
+  block_n: 128
+  block_k: 32
+  num_stages: 3
+  num_warps: 8
+  dtype: "float16"
+
+flash_attention:
+  block_m: 128
+  block_n: 128
+  dtype: "float16"
+  causal: true
+  head_dim: 64
+
+softmax:
+  block_size: 4096
+  dtype: "float32"
+
+reduction:
+  block_size: 8192
+  dtype: "float32"
+
+layernorm:
+  block_size: 4096
+  eps: 1.0e-5
+  dtype: "float32"
+
+rmsnorm:
+  block_size: 4096
+  eps: 1.0e-6
+  dtype: "float32"
+
+gelu:
+  exact: true
+  block_size: 65536
+  dtype: "float32"
+
+conv2d:
+  block_m: 1
+  block_n: 1
+  block_k: 1
+  dtype: "float32"
+
+# Benchmark settings
+benchmark:
+  warmup_runs: 10
+  num_repeats: 100
+  matrix_sizes:
+    - [256, 256, 256]
+    - [512, 512, 512]
+    - [1024, 1024, 1024]
+    - [2048, 2048, 2048]
+    - [4096, 4096, 4096]
+    - [8192, 8192, 8192]
+  attention_sequence_lengths:
+    - 256
+    - 512
+    - 1024
+    - 2048
+    - 4096
+    - 8192
+
+# Test settings
+testing:
+  tolerance_atol: 1.0e-4
+  tolerance_rtol: 1.0e-2
+  cos_sim_threshold: 0.99
+  test_device: "cuda"
